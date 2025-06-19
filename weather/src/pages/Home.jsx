@@ -1,4 +1,4 @@
-import City from "../components/City";
+import City from "../components/city/City";
 import Search from "../components/Search";
 
 
