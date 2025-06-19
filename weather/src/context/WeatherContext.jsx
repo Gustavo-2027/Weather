@@ -7,19 +7,11 @@ export const WeatherContext = createContext();
 export default function WeatherProvider({ children }) {
   const [data, setData] = useState([]);
   const [city, setCity] = useState("Natal");
-  const [horario, setHorario] = useState("")
+  const [horario, setHorario] = useState("");
 
   const timestamp = data.dt;
   const date = new Date(timestamp * 1000);
   const hora = date.getHours();
-
-  if(hora >= 7 && hora < 12) {
-      setHorario("Dia")
-  } else(hora >= 12 && hora < 18) {
-    setHorario("Tarde")
-  } else {
-    setHorario("Noite")
-  }
 
   useEffect(() => {
     async function fetchWeather() {
@@ -31,10 +23,18 @@ export default function WeatherProvider({ children }) {
       }
     }
     fetchWeather();
+    
+    if (hora >= 7 && hora < 12) {
+      setHorario("Dia");
+    } else if (hora >= 12 && hora < 18) {
+      setHorario("Tarde");
+    } else {
+      setHorario("Noite");
+    }
   }, [city]);
 
   return (
-    <WeatherContext.Provider value={{ data, setData, city, setCity, horario}}>
+    <WeatherContext.Provider value={{ data, setData, city, setCity, horario }}>
       {children}
     </WeatherContext.Provider>
   );
